@@ -2,7 +2,7 @@ load("sroots.mat");
 
 %% initial params
 
-x0 = [0; 0; 0; 0.2];
+x0 = [0; 0; 0; 0];
 
 A = [0, 0, 1, 0;
     0, 0, 0, 1;
@@ -36,3 +36,21 @@ K = place(phi, gamma, zpoles);
 if(~(min(delta1, delta2) >= 0.5))
     disp('warning: stability margin below 0.5')
 end
+
+%%simulink components
+r2d = 180 ./ pi;
+
+%square wave gen
+cmdPitchMag = 0.34; %[rad]
+cmdPitchFrq = 1 ./ 20; %[hz]
+
+cmdYawRate = 1.2566; %[rad/sec]
+
+% low pass filter
+Tsf=1; % filter settling time
+den=poly(s2/Tsf);
+num=den(end);
+LPF=c2d(tf(num,den),T,'tustin');
+[num,den]=tfdata(LPF);
+num=num{1};
+den=den{1};
