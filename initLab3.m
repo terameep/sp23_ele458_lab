@@ -37,7 +37,7 @@ if(~(min(delta1, delta2) >= 0.5))
     disp('warning: stability margin below 0.5')
 end
 
-%%simulink components
+%% simulink components
 r2d = 180 ./ pi;
 
 %square wave gen
